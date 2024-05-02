@@ -66,5 +66,36 @@ int main() {
 ```sh
 g++ telegram_bot.cpp -o telegram_bot --std=c++14 -I/usr/local/include -lTgBot -lboost_system -lssl -lcrypto -lpthread
 ```
+#### Также можно собрать проект через CMake
+Создаем 
+	vim CMakeLists.txt
+ Внутри пишем это:
+```CMake
+cmake_minimum_required(VERSION 3.0)
+project(TelegramBot)
 
+# Установка стандарта языка C++
+set(CMAKE_CXX_STANDARD 20)
+
+# Добавление исходных файлов
+add_executable(telegram_bot telegram_bot.cpp)
+
+# Добавление директивы для поиска заголовочных файлов
+target_include_directories(telegram_bot PRIVATE /usr/local/include)
+
+# Добавление зависимостей
+target_link_libraries(telegram_bot PRIVATE TgBot boost_system ssl crypto pthread)
+```
+Выоходим из нее 
+	:wq
+ 
+После создаем папку build:
+	mkdir build
+ 	cd build
+Внутри нее запускаем cmake:
+	 cmake ..
+После запускаем сборку проекта:
+	make
+На выходе также получаем файлик, чтобы его запустить пишем:
+	 ./telegram_bot  
 Чтобы проверить работоспособность, напишите что угодно этому придурку - @yapi_test_bot
